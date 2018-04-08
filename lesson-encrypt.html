@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="ecdh-functions.js"></script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a class="active" href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+ </nav>
+ <div class="page__content-container" id="encrypt-lesson">
+   <center>
+   <div>
+       <img src="images/locks.jpg" height="200" width="250" title="Encrypt" alt="Encrypt" />
+   </div>
+   <br><br>
+   <div>
+     Now that we have public and private keys for Alice and Bob, plus a set of points we can assign values to, we can use this to share more than just a single point message.
+     We can now use this information all together to share a message. Suppose Alice wanted to send the message 'BOOK' to Bob. Using points along the curve we can assign the
+     letters B O and K specific point values.
+     <br><br>
+     <table border=1 style="text-align:center;"><tr><td>B</td><td id="bPointValue"></td></tr>
+     <tr><td>O</td><td id="oPointValue"></td></tr>
+     <tr><td>K</td><td id="kPointValue"></td></tr></table>
+     <br><br>
+     Alice would encode the message B O O K as four point sets to send to Bob. She would use the same mathamatical formula as used in the previous page. Lets keep the same random k value
+     we picked previously. k = <span id="randomKt"></span> and k*G would be (<span id="pointKgt"></span>). This will be a mask value. We also know Bobs public key B is <span id="publicBob"></span>.<br><br>
+     <table border=1 style="text-align:center;">
+     <tr><td>Letter</td><td>B</td><td>O</td><td>O</td><td>K</td></tr>
+     <tr><td>Point</td><td id="bPointValue2"></td><td id="oPointValue2"></td><td id="oPointValue3"></td><td id="kPointValue2"></td></tr>
+     <tr><td>Point + k * B</td>
+         <td><span id="bPointValue3"></span>+<span id="randomKt2"></span>*<span id="publicBob2"></span></td>
+         <td><span id="oPointValue4"></span>+<span id="randomKt3"></span>*<span id="publicBob3"></span></td>
+         <td><span id="oPointValue5"></span>+<span id="randomKt4"></span>*<span id="publicBob4"></span></td>
+         <td><span id="kPointValue3"></span>+<span id="randomKt5"></span>*<span id="publicBob5"></span></td></tr>
+    <tr><td></td>
+      <td><span id="bPointValue4"></span>+<span id="pointC2a"></span></td>
+      <td><span id="oPointValue6"></span>+<span id="pointC2b"></span></td>
+      <td><span id="oPointValue7"></span>+<span id="pointC2c"></span></td>
+      <td><span id="kPointValue4"></span>+<span id="pointC2d"></span></td></tr>
+      <tr><td>Encrypted</td>
+        <td><span id="bCryptT"></span></td>
+        <td><span id="oCryptT"></span></td>
+        <td><span id="oCryptT2"></span></td>
+        <td><span id="kCryptT"></span></td></tr>
+      </table>
+   <br>
+   Alice would send the message <span id="messageToBob"></span> to Bob.
+   </div>
+   <br>
+   <div>
+     Bob would need to reverse the encryption to return to the original message. He does this by using his private key &beta; which is <span id="privateBob"></span>. After
+     we complete the math to get the original point, we can use the Letter to Point table at the top of the page to convert the points back into letters, and see
+     the original message that Alice encrypted.<br>
+     <table border=1 style="text-align:center;">
+       <tr><td>Point</td>
+         <td><span id="bCryptT2"></span></td>
+         <td><span id="oCryptT3"></span></td>
+         <td><span id="oCryptT4"></span></td>
+         <td><span id="kCryptT2"></span></td></tr>
+       <tr><td>Encrypted-&beta;*Mask</td>
+         <td><span id="bCryptT3"></span>-<span id="privateBob2"></span>*<span id="pointC1a"></span></td>
+         <td><span id="oCryptT5"></span>-<span id="privateBob3"></span>*<span id="pointC1b"></span></td>
+         <td><span id="oCryptT6"></span>-<span id="privateBob4"></span>*<span id="pointC1c"></span></td>
+         <td><span id="kCryptT3"></span>-<span id="privateBob5"></span>*<span id="pointC1d"></span></td></tr>
+       <tr><td></td>
+         <td><span id="bCryptT4"></span>-<span id="betaC1a"></span></td>
+         <td><span id="oCryptT7"></span>-<span id="betaC1b"></span></td>
+         <td><span id="oCryptT8"></span>-<span id="betaC1c"></span></td>
+         <td><span id="kCryptT4"></span>-<span id="betaC1d"></span></td></tr>
+       <tr><td>Message</td>
+              <td id="bPointValue5"></td><td id="oPointValue8"></td><td id="oPointValue9"></td><td id="kPointValue5"></td></tr>
+       <tr><td>Letter</td><td>B</td><td>O</td><td>O</td><td>K</td></tr>
+     </table>
+   </div>
+   <br><br>
+   <div>
+    <button id="nextbutton" onclick="next()">Next!</button>
+   </div>
+   </center>
+ </div>
+   <script>
+     function next(){
+       window.location.replace("lesson-wrapup.html");
+     }
+   function calcbC1(){
+       // console.log("Calculate beta * C1 = "+betaN+" * "+pointC1);
+       var x = Number(pointC1[0]);
+       var y = Number(pointC1[1]);
+       x1 = x;
+       y1 = y;
+       nextPt = "";
+       for (looper = 1; looper < betaN; looper++)
+       {
+         // console.log("Looper:"+looper+" x:"+x+"  y:"+y+"  x1:"+x1+"  y1:"+y1);
+         nextPt = addPts2(x,y,x1,y1);
+         if (nextPt == Infinity) {
+           looper++;
+           x1 = x;
+           y1 = y;
+         } else {
+           var x1 = Number(nextPt[0]);
+           var y1 = Number(nextPt[1]);
+         }
+         // console.log("Next Point = "+nextPt);
+       }
+       if ((nextPt == "") || (nextPt == Infinity)) {
+           nextPt = pointC1;
+       }
+       // console.log("Returning point = "+nextPt);
+       return nextPt;
+   }
+
+   a = Number(localStorage.getItem("a"));
+   b = Number(localStorage.getItem("b"));
+   Z = Number(localStorage.getItem("z"));
+  sharedP = localStorage.getItem("sharedP");
+  alphaN = Number(localStorage.getItem("alphaN"));
+  betaN = Number(localStorage.getItem("betaN"));
+  gArray = JSON.parse(localStorage.getItem("gArray"));
+  alphaG = localStorage.getItem("alphaG");
+  betaG = localStorage.getItem("betaG");
+  n = Number(localStorage.getItem("n"));
+  randomK = Number(localStorage.getItem("randomK"));
+  pointC2 = localStorage.getItem("pointC2");
+  pointC1 = gArray[randomK-1];
+  // Find values for B O and K
+  wordArray = ['B', 'O', 'K'];
+  wordCounter = 0;
+  for (looper = 1; looper < n; looper++) {
+    if ( (gArray[looper].toString() == betaG.toString()) || (gArray[looper].toString() == alphaG.toString()) ) {
+
+    } else {
+      wordArray[wordCounter] = gArray[looper].toString();
+      wordCounter++;
+    }
+    if (wordCounter > 3) { break; }
+  }
+    // add to get B, O and K crypted values.
+    tempArray = pointC2.split(",");
+    var x1 = Number(tempArray[0]);
+    var y1 = Number(tempArray[1]);
+    var tempArray = wordArray[0].split(",");
+    var x = Number(tempArray[0]);
+    var y = Number(tempArray[1]);
+    bCrypt = addPts2(x,y,x1,y1);
+    var tempArray = wordArray[1].split(",");
+    var x = Number(tempArray[0]);
+    var y = Number(tempArray[1]);
+    oCrypt = addPts2(x,y,x1,y1);
+    var tempArray = wordArray[2].split(",");
+    var x = Number(tempArray[0]);
+    var y = Number(tempArray[1]);
+    kCrypt = addPts2(x,y,x1,y1);
+    betaC1 = calcbC1();
+    // update the document with all the values
+  document.getElementById("bPointValue").innerText = "("+wordArray[0]+")";
+  document.getElementById("oPointValue").innerText = "("+wordArray[1]+")";
+  document.getElementById("kPointValue").innerText = "("+wordArray[2]+")";
+  document.getElementById("bPointValue2").innerText = "("+wordArray[0]+")";
+  document.getElementById("bPointValue3").innerText = "("+wordArray[0]+")";
+  document.getElementById("bPointValue4").innerText = "("+wordArray[0]+")";
+  document.getElementById("bPointValue5").innerText = "("+wordArray[0]+")";
+  document.getElementById("oPointValue2").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue3").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue4").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue5").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue6").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue7").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue8").innerText = "("+wordArray[1]+")";
+  document.getElementById("oPointValue9").innerText = "("+wordArray[1]+")";
+  document.getElementById("kPointValue2").innerText = "("+wordArray[2]+")";
+  document.getElementById("kPointValue3").innerText = "("+wordArray[2]+")";
+  document.getElementById("kPointValue4").innerText = "("+wordArray[2]+")";
+  document.getElementById("kPointValue5").innerText = "("+wordArray[2]+")";
+  document.getElementById("publicBob").innerText = "("+betaG+")";
+  document.getElementById("publicBob2").innerText = "("+betaG+")";
+  document.getElementById("publicBob3").innerText = "("+betaG+")";
+  document.getElementById("publicBob4").innerText = "("+betaG+")";
+  document.getElementById("publicBob5").innerText = "("+betaG+")";
+  document.getElementById("randomKt").innerText = randomK;
+  document.getElementById("randomKt2").innerText = randomK;
+  document.getElementById("randomKt3").innerText = randomK;
+  document.getElementById("randomKt4").innerText = randomK;
+  document.getElementById("randomKt5").innerText = randomK;
+  document.getElementById("pointKgt").innerText = "("+pointC1+")";
+  document.getElementById("pointC2a").innerText = "("+pointC2+")";
+  document.getElementById("pointC2b").innerText = "("+pointC2+")";
+  document.getElementById("pointC2c").innerText = "("+pointC2+")";
+  document.getElementById("pointC2d").innerText = "("+pointC2+")";
+  document.getElementById("pointC1a").innerText = "("+pointC1+")";
+  document.getElementById("pointC1b").innerText = "("+pointC1+")";
+  document.getElementById("pointC1c").innerText = "("+pointC1+")";
+  document.getElementById("pointC1d").innerText = "("+pointC1+")";
+  document.getElementById("betaC1a").innerText = "("+betaC1+")";
+  document.getElementById("betaC1b").innerText = "("+betaC1+")";
+  document.getElementById("betaC1c").innerText = "("+betaC1+")";
+  document.getElementById("betaC1d").innerText = "("+betaC1+")";
+  document.getElementById("bCryptT").innerText = "("+bCrypt+")";
+  document.getElementById("bCryptT2").innerText = "("+bCrypt+")";
+  document.getElementById("bCryptT3").innerText = "("+bCrypt+")";
+  document.getElementById("bCryptT4").innerText = "("+bCrypt+")";
+  document.getElementById("oCryptT").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT2").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT3").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT4").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT5").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT6").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT7").innerText = "("+oCrypt+")";
+  document.getElementById("oCryptT8").innerText = "("+oCrypt+")";
+  document.getElementById("kCryptT").innerText = "("+kCrypt+")";
+  document.getElementById("kCryptT2").innerText = "("+kCrypt+")";
+  document.getElementById("kCryptT3").innerText = "("+kCrypt+")";
+  document.getElementById("kCryptT4").innerText = "("+kCrypt+")";
+  document.getElementById("messageToBob").innerText = "{("+pointC1+"),("+bCrypt+")}{("+pointC1+"),("+oCrypt+")}{("+pointC1+"),("+oCrypt+")}{("+pointC1+"),("+kCrypt+")}";
+  document.getElementById("privateBob").innerText = betaN;
+  document.getElementById("privateBob2").innerText = betaN;
+  document.getElementById("privateBob3").innerText = betaN;
+  document.getElementById("privateBob4").innerText = betaN;
+  document.getElementById("privateBob5").innerText = betaN;
+  </script>
+</body>
+</html>

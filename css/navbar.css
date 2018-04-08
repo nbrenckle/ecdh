@@ -1,0 +1,40 @@
+/* Navigator bar elements */
+.Navigator-menu {
+    clear: both;
+    float: left;
+    position: fixed;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 100px;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+.reset-button {
+    background-color: #FF6347;
+    color: white;
+    padding: 15px;
+}
+li b.infomation {
+    padding: 15px;
+    position: fixed;
+    fload: bottom;
+}

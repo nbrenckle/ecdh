@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a class="active" href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+ </nav>
+ <div class="page__content-container" id="encrypt-lesson">
+   <center>
+   <div>
+       <img src="images/lock2.jpg" height="200" width="250" title="Encrypt" alt="Encrypt" />
+   </div>
+   <br><br>
+   <div>
+       One way Alice and Bob can use encryption is to send other points of the curve in secret. For example, if Alice wants to send Bob the point
+       (<span id="PointMessage"></span>), she can Bobs public key, and he can decrypt it with his private key.
+       She then sends two points to Bob. First is a mask value computed using a random value and the value of G. Second is a Cipher of the point Alice
+       wants to send. Bob can use these two points to find the original message. <br><br>
+       First Alice would pick a random value k, such as <span id="valueK"></span>. The point k * G would be (<span id="pointKg"></span>) and we will use that
+       as a mask value. The message Alice sends to Bob can be computed
+       as <br>
+       CryptedPoint = Message Point + k * B, where B is Bobs public key <br>
+       (<span id="PointMessage2"></span>) + <span id="valueK2"></span> * (<span id=betaGBob></span>) <br>
+       (<span id="PointMessage3"></span>) + (<span id=kbetaGBob></span>) <br>
+        which in this case computes to point (<span id="publicPoint"></span>).<br><br>
+       Alice will then send to Bob the message of {(<span id="pointKg2"></span>), (<span id="publicPoint2"></span>)}. Bob will get this
+       message and decode it using <br>
+       Message Point = CryptedPoint - &beta; * Mask, where &beta; is Bobs private key. <br>
+       (<span id="publicPoint3"></span>) - <span id="bobsPrivate"></span> * (<span id=pointKg3></span>) <br>
+       (<span id="publicPoint4"></span>) - (<span id=betaC1s></span>). <br>
+       This results in the original message of (<span id="answerPoint"></span>)<br><br>
+       By creating an table of points to letters, Bob and Alice can send text messages in this fashion, assuming they have enough points on their curve to
+       cover all the letters of the alphabet they are working with. One way older crypto systems worked to make the table smaller was use similar letters as substitutes, such as
+       U and V. Another is to shorten all the words into shorter word sequences, making the encyted message shorter and less susceptible to some cryto breaking techniques. Both
+       of these methods were using in <a href="https://en.wikipedia.org/wiki/World_War_II_cryptography" target="_blank">WW2</a>.<br><br>
+   </div>
+   <div id="lettertable">
+   </div>
+   <br><br>
+   <div>
+      <button id="nextbutton" onclick="next()">Next!</button>
+      </center>
+
+    </div>
+  <script src="ecdh-functions.js"></script>
+  <script>
+
+  function calcbC1(){
+      // console.log("Calculate beta * C1 = "+betaN+" * "+pointC1);
+      var x = Number(pointC1[0]);
+      var y = Number(pointC1[1]);
+      x1 = x;
+      y1 = y;
+      nextPt = "";
+      for (looper = 1; looper < betaN; looper++)
+      {
+        // console.log("Looper:"+looper+" x:"+x+"  y:"+y+"  x1:"+x1+"  y1:"+y1);
+        nextPt = addPts2(x,y,x1,y1);
+        if (nextPt == Infinity) {
+          looper++;
+          x1 = x;
+          y1 = y;
+        } else {
+          var x1 = Number(nextPt[0]);
+          var y1 = Number(nextPt[1]);
+        }
+        // console.log("Next Point = "+nextPt);
+      }
+      if ((nextPt == "") || (nextPt == Infinity)) {
+          nextPt = pointC1;
+      }
+      // console.log("Returning point = "+nextPt);
+      return nextPt;
+  }
+  function calckB(){
+      // console.log("Calculate k * B = "+k+" * "+betaG);
+      var tempArray = betaG.split(",");
+      var x = Number(tempArray[0]);
+      var y = Number(tempArray[1]);
+      x1 = x;
+      y1 = y;
+      nextPt = "";
+      for (looper = 1; looper < k; looper++)
+      {
+        // console.log("Looper:"+looper+" x:"+x+"  y:"+y+"  x1:"+x1+"  y1:"+y1);
+        nextPt = addPts2(x,y,x1,y1);
+        if (nextPt == Infinity) {
+          looper++;
+          x1 = x;
+          y1 = y;
+        } else {
+          var x1 = Number(nextPt[0]);
+          var y1 = Number(nextPt[1]);
+        }
+        // console.log("Next Point = "+nextPt);
+      }
+      if ((nextPt == "") || (nextPt == Infinity)) {
+          nextPt = betaG;
+      }
+      // console.log("Returning point = "+nextPt);
+      return nextPt;
+  }
+
+  sharedP = localStorage.getItem("sharedP");
+  gArray = JSON.parse(localStorage.getItem("gArray"));
+  arrayPoints = JSON.parse(localStorage.getItem("ptsArray"));
+  n = Number(localStorage.getItem("n"));
+  alphaN = Number(localStorage.getItem("alphaN"));
+  betaN = Number(localStorage.getItem("betaN"));
+  alphaG = localStorage.getItem("alphaG");
+  betaG = localStorage.getItem("betaG");
+  alphabetaG = localStorage.getItem("alphabetaG");
+  betaalphaG = localStorage.getItem("betaalphaG");
+  a = Number(localStorage.getItem("a"));
+  b = Number(localStorage.getItem("b"));
+  Z = Number(localStorage.getItem("z"));
+  gArray = JSON.parse(localStorage.getItem("gArray"));
+  G = localStorage.getItem("G");
+    rando = Math.floor(Math.random() * n);
+    // rando = 3;
+    pointM = arrayPoints[rando];
+    k = (Math.floor(Math.random() * n)) + 1;
+    // k = 1;
+    localStorage.setItem("randomK", k);
+    pointC1 = gArray[k-1];
+    betaC1 = calcbC1();
+    pointC2 = calckB();
+    localStorage.setItem("pointC2", pointC2);
+    // console.log("beta*C1 ="+betaC1+" and k*B ="+pointC2);
+    var x = Number(pointM[0]);
+    var y = Number(pointM[1]);
+    // var tempArray = pointC2.split(",");
+    // var x1 = Number(tempArray[0]);
+    // var y1 = Number(tempArray[1]);
+    x1 = Number(pointC2[0]);
+    y1 = Number(pointC2[1]);
+    // console.log("Adding points ("+x+","+y+") and ("+x1+","+y1+")");
+    publicP = addPts2(x,y,x1,y1);
+    if (publicP == Infinity) {
+      // console.log("Oops. Infinity.");
+      // alert("Point Calculates Infinity adding points for Message ["+pointM+"] and k["+k+"]*B["+betaG+"] - press OK to select new random value for k and new point to calculate.")
+      window.location.replace("lesson-encrypt-point.html");
+    }
+    publicPtxt = publicP[0]+","+publicP[1];
+    var x1 = Number(publicP[0]);
+    var y1 = Number(publicP[1]);
+    var x2 = Number(betaC1[0]);
+    var yi = Number(betaC1[1]);
+    var y2 = (-1*yi);
+    // console.log("Calculating Pm from C2 and -betaC1 Adding points ("+x1+","+y1+") and ("+x2+","+y2+")");
+    answerP = addPts2(x1,y1,x2,y2);
+    if (answerP == Infinity) {
+      // console.log("Oops. Infinity.");
+      // alert("Point Calculates Infinity subtracting Cipher message ["+publicP+"] and beta*C1 ["+betaC1+"] - press OK to select new random value for k and new point to calculate.")
+      window.location.replace("lesson-encrypt-point.html");
+    }
+    // console.log("Answer point "+answerP);
+    /* Update the page all at once, keeps it from flickering when it hits the inifity restarts, see above */
+    document.getElementById("betaGBob").innerHTML = betaG;
+    document.getElementById("kbetaGBob").innerHTML = pointC2;
+    document.getElementById("bobsPrivate").innerHTML = betaN;
+    document.getElementById("PointMessage").innerHTML = pointM;
+    document.getElementById("PointMessage2").innerHTML = pointM;
+    document.getElementById("PointMessage3").innerHTML = pointM;
+    document.getElementById("valueK").innerHTML = k;
+    document.getElementById("valueK2").innerHTML = k;
+    document.getElementById("pointKg").innerHTML = pointC1;
+    document.getElementById("pointKg2").innerHTML = pointC1;
+    document.getElementById("pointKg3").innerHTML = pointC1;
+    document.getElementById("publicPoint").innerHTML = publicPtxt;
+    document.getElementById("publicPoint2").innerHTML = publicPtxt;
+    document.getElementById("publicPoint3").innerHTML = publicPtxt;
+    document.getElementById("publicPoint4").innerHTML = publicPtxt;
+    document.getElementById("betaC1s").innerHTML = betaC1;
+    document.getElementById("answerPoint").innerHTML = answerP;
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    alphabetCounter = 0;
+    tabletodraw = "Your current array of available points can translate to "+n+" possible letters. Below is a conversion table for upper case English letters to points. <table><tr><th>Letter</th><th>Value</th></tr>";
+    for (looper = 0; looper < n; looper++)
+    {
+      workingPoint = arrayPoints[looper];
+      x = workingPoint[0];
+      y = workingPoint[1];
+      if (addPts2(x,y,x,y) != Infinity) {
+         // console.log("Checking point 2*("+x+","+y+")");
+         if (workingPoint == pointM) { letterMessage = alphabet[alphabetCounter]; }
+         tabletodraw += "<tr><td>" + alphabet[alphabetCounter] + "</td><td>(" + workingPoint + ")</td></tr>";
+         alphabetCounter++;
+         if (alphabetCounter > 25) { break; }
+      }
+    }
+    tabletodraw += "</table><br>";
+    document.getElementById("lettertable").innerHTML = tabletodraw;
+  function next(){
+    window.location.replace("lesson-encrypt.html");
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<a href="mailto:joe@example.com?subject=feedback">email me</a>
+
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/header.css">
+  <link rel="stylesheet" type="text/css" href="css/navbar.css">
+  <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#" class="active">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+
+  <div class="page__content-container" id="formula-lesson">
+     <center>
+     <div>
+       <a href="https://prateekvjoshi.com/2015/02/07/why-are-they-called-elliptic-curves/" target="_blank">
+       <img src="images/main-joke.png" height="200" width="440" title="Ellipse Elliptic" alt="Ellipse vs Elliptic" />
+       </a>
+     </div>
+     </center>
+     <p></p>
+     <div class="container">
+       <center>
+       <div class="input-page">
+         <div class="title">
+   	        <h1>Finding Points on the Elliptic Curve</h1><p>
+            Alice and Bob would like to share some information that they would like to keep secret from anyone but themselves. They have decided to use Elliptic Curve Cryptography
+            and Diffie-Hellman to exchange a <a href="https://en.wikipedia.org/wiki/Symmetric-key_algorithm" target=_blank>symmetric cypher key</a>. In the first step, Alice and Bob will need
+            to agree on some values for their curve. The formula shown below is for a basic elliptic curve. You will the select values used for this elliptic curve. These values are 'public', that is,
+            they are known to both Alice and Bob, as well as anyone else listening in on the conversation.
+            On this step you are declaring values for 'a', 'b', and 'Z'. 'a' and 'b' are values of the curve itself, while 'Z' is the value over a field
+            of points. In our instance we are using integers over the field of mod Z. Enter values and press the '<font color=red>Calculate!</font>' button to find points
+            on the curve to work with.  After calculating the points on your curve, you can scroll down to view the points, press the '<font color=red>Next!</font>' button to advance to <thead>
+            next step! If you don't want to pick your own values, use a=1, b=5, and z=127.
+         </div>
+         <p>
+         <div id="equation">
+             &nbsp; &nbsp; &nbsp; &nbsp;
+             \(y^2 = x^3 + \)
+             <span id="a-eqn" class="math">a</span>\(x + \)<span id="b-eqn" class="math">b</span> in \(Z mod \)<span id="z-eqn" class="math">z</span>
+         </div>
+         <div class="inputs">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+   	        a = <input id="a" onkeyup="updateEquation('a')">
+   	        b = <input id="b" onkeyup="updateEquation('b')">
+   	        z = <input id="z" onkeyup="updateEquation('z')">
+         </div>
+         <div>
+            <p>*Note:  <span id="fail2text">Z must be a prime number</span> and <span id="failtext">\(4a^3\) cannot equal \(27b^2\)</span> in specified Z.
+            <br>This is to eliminate <a href="http://mathworld.wolfram.com/SingularPoint.html" target="_blank">singular curves</a>.</p>
+         </div>
+         <br>
+         <button id="eccbutton" onclick="checkValues()">Calculate!</button>    <button id="nextbutton" onclick="next()">Next!</button>
+         <script>
+         document.getElementById("eccbutton").disabled = true;
+         document.getElementById("nextbutton").disabled = true;
+         function updateEquation(num)
+         {
+         	document.getElementById(num + "-eqn").innerText =  document.getElementById(num).value;
+         	var myPara = document.getElementById("failtext");
+         	myPara.innerHTML = myPara.innerHTML.replace(/4a³ cannot equal 27b²/, '<span style="color:black">4a³ cannot equal 27b²</span>');
+         	var myPara = document.getElementById("fail2text");
+         	myPara.innerHTML = myPara.innerHTML.replace(/Z must be a prime number/, '<span style="color:black">Z must be a prime number</span>');
+         	if( (isPrime(document.getElementById("z").value)) && !(isNaN(document.getElementById("z").value)) )
+         	{
+         		 var myPara = document.getElementById("fail2text");
+         		 myPara.innerHTML = myPara.innerHTML.replace(/Z must be a prime number/, '<span style="color:black">Z must be a prime number</span>');
+         	} else {
+         		 var myPara = document.getElementById("fail2text");
+         		 myPara.innerHTML = myPara.innerHTML.replace(/Z must be a prime number/, '<span style="color:red">Z must be a prime number</span>');
+         	}
+         	if( (4*Math.pow((document.getElementById("a").value),3)) ==
+         			(27*Math.pow((document.getElementById("b").value),2)) )
+         	{
+         		 var myPara = document.getElementById("failtext");
+         		 myPara.innerHTML = myPara.innerHTML.replace(/4a³ cannot equal 27b²/, '<span style="color:red">4a³ cannot equal 27b²</span>');
+         	}
+         	document.getElementById("pts-list-title").style.visibility = "hidden";
+          if( (document.getElementById("z").value != "") &&
+              (document.getElementById("a").value != "") &&
+              (document.getElementById("b").value != "") &&
+              !(isNaN(document.getElementById("z").value)) &&
+              !(isNaN(document.getElementById("a").value)) &&
+              !(isNaN(document.getElementById("b").value)) )
+            {
+                     document.getElementById("eccbutton").disabled = false;
+            } else {
+                     document.getElementById("eccbutton").disabled = true;
+            }
+         }
+           function next(){
+         	   localStorage.setItem("a", document.getElementById("a").value);
+         	   localStorage.setItem("b", document.getElementById("b").value);
+         	   localStorage.setItem("z", document.getElementById("z").value);
+         	   localStorage.setItem("points", document.getElementById("points").innerText);
+         	   window.location.replace("lesson-pointmath.html");
+           }
+         </script>
+       </div>
+       <div>
+         <h2 id="pts-list-title">The <span id="pt-count"></span> points on the curve:</h2>
+         <span id="points"></span>
+   	     <script>
+   		     document.getElementById("pts-list-title").style.visibility = "hidden";
+         </script>
+         <br><br>
+       </div>
+       </center>
+     </div>
+   </div>
+  <script src="ecdh-functions.js"></script>
+</body>
+</html>

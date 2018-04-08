@@ -1,0 +1,15 @@
+.form_area {
+    height: auto;
+    width : 750px;
+    padding-top: 150px;
+}
+.inputs_table  input[type="text"] {
+    width: 500px;
+}
+
+label  {
+    white-space: nowrap;
+}
+tr.spaceUnder>td {
+  padding-bottom: 2em;
+}

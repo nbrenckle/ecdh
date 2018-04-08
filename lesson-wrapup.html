@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a class="active" href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+ </nav>
+ <div class="page__content-container" id="encrypt-lesson">
+   <center>
+   <div>
+       <img src="images/wrap-up.png" height="150" width="250" title="Wrap Up!" alt="Wrap Up!" />
+   </div>
+   <div><br>
+       Alice and Bob now have a way to encrypt data and keep it private during transmission. The table below lists all of the elements used to set up this private exchange
+       of information
+       and indicates which elements are public, in that anyone listening would know them, and which elements are private to either Alice and Bob, or to both of them.
+       Items highlited in green are known to anyone listening. Items in red are known to only Alice or Bob. Items in pink are known only to both Alice and Bob.
+   </div>
+   <div>
+     <br>
+      <table  style="text-align:center">
+        <tr><td></td><td>Elements of the Curve</td><td></td></tr>
+        <tr><td bgcolor="#27ae60" id="a1"></td><td>a</td><td bgcolor="#27ae60" id="a2"></td></tr>
+        <tr><td bgcolor="#27ae60" id="b1"></td><td>b</td><td bgcolor="#27ae60" id="b2"></td></tr>
+        <tr><td bgcolor="#27ae60" id="z1"></td><td>z</td><td bgcolor="#27ae60" id="z2"></td></tr>
+        <tr><td></td><td>Key Elements</td><td></td></tr>
+        <tr><td bgcolor="#27ae60" id="GgraphA"></td><td>G</td><td bgcolor="#27ae60" id="GgraphB"></td></tr>
+        <tr><td bgcolor="#27ae60" id="n1"></td><td>n</td><td bgcolor="#27ae60" id="n2"></td></tr>
+        <tr><td bgcolor="#27ae60" id="h1"></td><td>h</td><td bgcolor="#27ae60" id="h2"></td></tr>
+        <tr><td>Alices Private Key &alpha;</td><td></td><td>Bobs Private Key &beta;</td></tr>
+        <tr><td bgcolor="#e74c3c" id="aliceN"></td><td></td><td bgcolor="#e74c3c" id="bobN"></td></tr>
+        <tr><td bgcolor="#27ae60" id="alphaG1"></td><td>A</td><td bgcolor="#27ae60" id="alphaG2"></td></tr>
+        <tr><td bgcolor="#27ae60" id="betaG1"></td><td>B</td><td bgcolor="#27ae60" id="betaG2"></td></tr>
+        <tr><td bgcolor="#f1948a" id="sharedPoint1"></td><td>P</td><td bgcolor="#f1948a"  id="sharedPoint2"></td></tr>
+      </table>
+   </div><br><br>
+   <div>
+       Elliptic Curve is a very popular method for encrpting data. There are many standard values used in web browsers and other programs to handle setting up an encryted
+       session for you, such as when using an ecrypted URL and the 'https://' tag. The National Institude of Standards and
+       Technology (NIST) publishes a list of suggestions every few years. The latest of which, <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf">NIST FIPS 186-4</a>,
+       includes widely accepted standards such as P-192, P224 and P-256.
+       In comparison to the values we used for this lesson, Bitcoin uses the the values below, also known as curve secp256k1. While a and b are still small, the value for Z
+       is quite large, as is the generator value G.
+       <br><br>
+       <table  style="text-align:center">
+         <tr><td></td><td>Elements of the Curve</td><td></td></tr>
+         <tr><td>a</td><td bgcolor="#27ae60">0</td></tr>
+         <tr><td>b</td><td bgcolor="#27ae60">7</td></tr>
+         <tr><td>z</td><td bgcolor="#27ae60">\(2^{256}-2^{32}-2^9-2^8-2^7-2^6-2^4-1\)</td></tr>
+         <tr><td></td><td>Key Elements</td><td></td></tr>
+         <tr><td>G</td><td bgcolor="#27ae60"> 02 79BE667E F9DCBBAC 55A06295 CE870B07 029BFCDB 2DCE28D9 59F2815B 16F81798</td></tr>
+       </table>
+   </div><br><br>
+     Thank you for using this program to learn about Elliptic Curve Diffie Hellman! I hope it helped you with your studies.
+   <br>
+   Would you be willing to fill out a quick survey about the ECDH lesson?<br>
+   <button id="nextbutton" onclick="next()">Yes!</button>
+   </center>
+  </div>
+  <script>
+  a = Number(localStorage.getItem("a"));
+  document.getElementById("a1").innerText = a;
+  document.getElementById("a2").innerText = a;
+  b = Number(localStorage.getItem("b"));
+  document.getElementById("b1").innerText = b;
+  document.getElementById("b2").innerText = b;
+  z = Number(localStorage.getItem("z"));
+  document.getElementById("z1").innerText = z;
+  document.getElementById("z2").innerText = z;
+  G = localStorage.getItem("G");
+  document.getElementById("GgraphA").innerText = "(" + G + ")";
+  document.getElementById("GgraphB").innerText = "(" + G + ")";
+  n = Number(localStorage.getItem("n"));
+  document.getElementById("n1").innerText = n;
+  document.getElementById("n2").innerText = n;
+  h = Number(localStorage.getItem("h"));
+  document.getElementById("h1").innerText = h;
+  document.getElementById("h2").innerText = h;
+  alphaN = localStorage.getItem("alphaN");
+  document.getElementById("aliceN").innerText = alphaN;
+  betaN = localStorage.getItem("betaN");
+  document.getElementById("bobN").innerText = betaN;
+  alphaG = localStorage.getItem("alphaG");
+  betaG = localStorage.getItem("betaG");
+  document.getElementById("alphaG1").innerText = alphaG;
+  document.getElementById("alphaG2").innerText = alphaG;
+  document.getElementById("betaG1").innerText = betaG;
+  document.getElementById("betaG2").innerText = betaG;
+  sharedP = localStorage.getItem("sharedP");
+  document.getElementById("sharedPoint1").innerText = sharedP;
+  document.getElementById("sharedPoint2").innerText = sharedP;
+  function next(){
+    window.location.replace("ending-survey.html");
+  }
+  </script>
+</body>
+</html>

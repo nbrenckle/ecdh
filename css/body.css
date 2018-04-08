@@ -1,0 +1,122 @@
+.page__content-container {
+  margin: auto;
+  float: center;
+  padding-top: 130px;
+  padding-left: 230px;
+}
+.inlineTable {
+  display: inline-block;
+}
+input {
+	width: 80px;
+}
+.column {
+  float: left;
+  width: 50%;
+  height: 500px;
+}
+.row:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+pre, listing {
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.code {
+  white-space: normal;
+  background-color: #E8E8E8;
+  border: 1px inset;
+  border-top-color: initial;
+  border-top-style: inset;
+  border-top-width: 1px;
+  border-right-color: initial;
+  border-right-style: inset;
+  border-right-width: 1px;
+  border-bottom-color: initial;
+  border-bottom-style: inset;
+  border-bottom-width: 1px;
+  border-left-color: initial;
+  border-left-style: inset;
+  border-left-width: 1px;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
+  color: #4d3e32;
+  font-family: "monospace";
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0.5em auto 0.5em auto;
+  margin-top: 0.5em;
+  margin-right: auto;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  max-height: 450px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  overflow-x: scroll;
+  padding: 1em;
+  padding-top: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+}
+div#equation {
+	font-size: 30px;
+}
+span.math {
+	font-family: MathJax_Main;
+}
+div.input-page {
+	width: 50vw;
+	margin: 2% auto;
+	padding: 0 2%;
+}
+div#pts-table {
+	overflow: auto;
+	height: 60vh;
+}
+table {
+  margin: auto;
+}
+td {
+  white-space: nowrap;
+  padding: 5px;
+}
+span#points {
+	display: block;
+	word-break: break-word;
+	width: 75%;
+	position: absolute;
+	left: 50%;
+	margin-left: -27.5%;
+  overflow: auto;
+}
+div.output-page {
+  align-items: center;
+}
+.chart {
+  margin: auto;
+  float: center;
+
+}
+
+.main text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+}
+
+circle {
+    fill: steelblue;
+}

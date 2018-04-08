@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellmann - Intro</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/header.css">
+  <link rel="stylesheet" type="text/css" href="css/navbar.css">
+  <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>
+  w3.includeHTML();
+  </script>
+
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#" class="active">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+  </nav>
+
+
+ <div class="page__content-container">
+   <center>
+   <div>
+    <a href="https://en.wikipedia.org/wiki/Neal_Koblitz" target="_blank">
+       <img src="images/neal_koblitz.jpg" height="250" width="240" title="Neal Koblitz" alt="Neal Koblitz" /></a>
+    <a href="https://en.wikipedia.org/wiki/Victor_S._Miller" target="_blank">
+       <img src="images/miller.jpg" height="250" width="240" title="Victor S Miller" alt="Victor S Miller" /></a>
+    <a href="https://en.wikipedia.org/wiki/Whitfield_Diffie" target="_blank">
+       <img src="images/diffie.jpg" height="250" width="240" title="Whitfield Diffie" alt="Whitfield Diffie" /></a>
+    <a href="https://en.wikipedia.org/wiki/Martin_Hellman" target="_blank">
+        <img src="images/hellman.jpg" height="250" width="240" title="Martin Hellman" alt="Martin Hellman" /></a>
+
+     <p>Left to right: Neal Koblitz, Victor Miller, Whitfield Diffie and Martin Hellman.
+   </div>
+   </center>
+   <p><br>
+    Elliptic Curve Cryptography (ECC) was introduced independently by both Dr. Neil Koblitz at the University of Washington and Victor Miller working at I.B.M., each publishing their findings
+    in different academic journals. Whitfield Diffie and Martin Hellman, working together, composed a way to exchange cryptographic keys in such a way as to prevent an evesdropper from gaining
+    access to the encryption key. This became known as the Diffie-Hellman Key Exchange. Together, these two systems comprise a way for two people to share private information
+    in a public forum such as the internet, without the need of exchanging a pre-shared secret key.
+    Elliptic Curve Cryptography is used to generate keys, while the Diffie-Hellman key exchange is used to establish a shared private key.
+    This is often abbreviated as <span style="font-weight:bold">ECDH</span>, for
+    <span style="font-weight:bold">E</span>lliptic
+    <span style="font-weight:bold">C</span>urve
+    <span style="font-weight:bold">D</span>iffie
+    <span style="font-weight:bold">H</span>ellman. Click the above images to learn more about each of them, or click the <font color="red">Next!</font> button below to continue the lesson.
+   </p>
+ </div>
+ <center><p><br>
+ <form><input type="button" value="Next!" onClick="parent.location='lesson-formula.html'"></form>
+ </center>
+ <p><br></p>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a class="active" href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+ </nav>
+ <div class="page__content-container" id="alphabeta-lesson">
+   <center>
+   <div>
+       <img src="images/alphabeta.png" height="200" width="200" title="Alpha Beta" alt="Alpha Beta Greek Characters" />
+   </div>
+   <p><br>
+   <div>
+      We have completed calculating the domain paramaters! The domain parameters consist of the equation values a, b and Z from the first page, along with
+      the generator point G, the order n and the cofactor h from the second page. It is now time to select Alice and Bob's private keys. Public key encyption employs what
+      is known as a '<a href="https://en.wikipedia.org/wiki/Trapdoor_function" target=_blank>trapdoor</a>' function. A trapdoor function is one that is very easy to solve
+      in one direction, but very hard to work backwards to find factors from the solution. While the generator point G is known to all parties, and all parties will now
+      the result of &alpha; * G and &beta; * G, trying
+      to calculate the values of &alpha; and &beta; from &alpha;G and &beta;G is very difficult. This is also called the Elliptic Curve discrete logarithm problem.
+      &alpha; and &beta; are values between 1 and the order, or with our choices, between 1 and <span id="nvalue">000</span>. Enter a value for &alpha;, Alices private key.
+      <br><br>
+      Press <font color=red>Calculate for Bob!</font> to choose a random &beta; value for Bob. While Alice and Bob can choose the same random value, choose different ones your
+      first time through. Alice and Bob have their keys selected, press <font color=red>Next!</font>
+      to move onto the next page.
+   </div>
+   <p><br>
+   <div id="table">
+     <center>
+     <table border="5" width="50%" cellpadding="4" cellspacing="4">
+         <tr align="center"><td><h2>Alice</h2></td><td></td><td><h2>Bob</h2></td></tr>
+         <tr align="center"><td id="GgraphA">G</td><td>G</td><td id="GgraphB">G</td></tr>
+         <tr align="center"><td>
+           &alpha; = <input id="alphaN" onkeyup="updateTable()">
+         </td><td>Key</td><td><span id="betaN">&beta;</span></td></tr>
+         <tr align="center"><td>A for Alice</td><td></td><td>B for Bob</td></tr>
+         <tr align="center"><td><span id="alphaG">&alpha;</span></td><td>Key * G</td><td><span id="betaG">&beta;</span></td></tr>
+
+     </table>
+     </center>
+   </div>
+   <br>
+   <button id="BobBeta" onclick="calculate_bob()">Calculate for Bob!</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next!</button>
+   </center>
+   <script>
+       strPoints = localStorage.getItem("points");
+       arrayPoints = JSON.parse(localStorage.getItem("ptsArray"));
+       a = Number(localStorage.getItem("a"));
+       b = Number(localStorage.getItem("b"));
+       Z = Number(localStorage.getItem("z"));
+       gArray = JSON.parse(localStorage.getItem("gArray"));
+       G = localStorage.getItem("G");
+       document.getElementById("GgraphA").innerText = "(" + G + ")";
+       document.getElementById("GgraphB").innerText = "(" + G + ")";
+       n = Number(localStorage.getItem("n"));
+       document.getElementById("nvalue").innerText = String(n);
+       h = Number(localStorage.getItem("h"));
+       document.getElementById("nextbutton").disabled = true;
+   </script>
+  </div>
+  <script>
+  function next(){
+    localStorage.setItem("alphaN", document.getElementById("alphaN").value);
+    localStorage.setItem("betaN", betaN);
+    localStorage.setItem("alphaG", alphaG);
+    localStorage.setItem("betaG", betaG);
+    window.location.replace("lesson-Psharedsecret.html");
+  }
+  function updateTable()
+  {
+  	var myAlpha = document.getElementById("alphaN").value;
+    myAlpha--;
+    alphaG = String(gArray[myAlpha]);
+  	document.getElementById("alphaG").innerText = "(" + alphaG + ")";
+
+  	if( ((document.getElementById("alphaN").value)!="") &&
+  			((document.getElementById("alphaG").value)!="") )
+  		 {
+  					document.getElementById("nextbutton").disabled = false;
+  		 }
+
+  }
+  function calculate_bob()
+  {
+       myDisplayBeta = Math.floor(Math.random() * (n));
+       myBeta = myDisplayBeta++;
+       betaN = myDisplayBeta;
+       betaG = String(gArray[myBeta]);
+       document.getElementById("betaN").innerText = String(betaN);
+       document.getElementById("betaG").innerText = "(" + betaG + ")";
+  }
+  </script>
+</body>
+</html>

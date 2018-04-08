@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/javascript" src="d3.v2.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+<div w3-include-html="header.html"></div>
+<script>w3.includeHTML();</script>
+<nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a href="#">Point Addition</a></li>
+     <li><a class="active" href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt Point</a></li>
+     <li><a href="#">Encrypt Message</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+  </script>
+</nav>
+ <script type="text/javascript">
+     // Draw scatter plot of numbers on your curve using the d3 library
+    function scatterChartDraw(data){
+        if (data.length < 25) {
+          radius = 8
+        } else {
+          radius = 2
+        }
+        var margin = {top: 20, right: 15, bottom: 60, left: 60}
+          , width = 600 - margin.left - margin.right
+          , height = 500 - margin.top - margin.bottom;
+
+        var x = d3.scale.linear()
+                  .domain([0, d3.max(data, function(d) { return d[0]; })])
+                  .range([ 0, width ]);
+
+        var y = d3.scale.linear()
+        	      .domain([0, d3.max(data, function(d) { return d[1]; })])
+        	      .range([ height, 0 ]);
+
+        var chart = d3.select('#svgGraph')
+    	/* .append('svg:svg') */
+      .append("svg")
+      .attr('width', width + margin.right + margin.left)
+    	.attr('height', height + margin.top + margin.bottom)
+    	.attr('class', 'chart')
+
+        var main = chart.append('g')
+    	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    	.attr('width', width)
+    	.attr('height', height)
+    	.attr('class', 'main')
+
+        // draw the x axis
+        var xAxis = d3.svg.axis()
+    	.scale(x)
+    	.orient('bottom');
+
+        main.append('g')
+    	.attr('transform', 'translate(0,' + height + ')')
+    	.attr('class', 'main axis date')
+    	.call(xAxis);
+
+        // draw the y axis
+        var yAxis = d3.svg.axis()
+    	.scale(y)
+    	.orient('left');
+
+        main.append('g')
+    	.attr('transform', 'translate(0,0)')
+    	.attr('class', 'main axis date')
+    	.call(yAxis);
+
+        var g = main.append("svg:g");
+
+        g.selectAll("scatter-dots")
+          .data(data)
+          .enter().append("svg:circle")
+              .attr("cx", function (d,i) { return x(d[0]); } )
+              .attr("cy", function (d) { return y(d[1]); } )
+              .attr("r", radius);
+    }
+
+   function next(){
+     window.location.replace("lesson-alphabeta.html");
+   }
+
+
+   // Caluclate the points 2G, 3G, 4G....infinity
+   function calculate(){
+     document.getElementById("g-pts-list-title").style.visibility = "visible";
+     document.getElementById("n-and-h").style.visibility = "visible";
+      gArray = [];
+      var n, h;
+      G = document.getElementById("G").value.replace(/[()]/g, '');
+      GParens = "("+G+")";
+      if (strPoints.indexOf(G) == -1) {
+          // console.log("Point G not in list of points.");
+         alert('Point selected is not on the list of points. Please try again.')
+      } else {
+      var tempArray = G.split(",");
+      var x = Number(tempArray[0]);
+      var y = Number(tempArray[1]);
+      var newArray = [];
+      var tempArray2 = [x,y];
+      newArray.push(tempArray2);
+      for(var i = 0; i < strPoints.length; i++) {
+         x1 = newArray[i][0];
+         y1 = newArray[i][1];
+         addedPts = addPts2(x1,y1,x,y);
+         if (addedPts == Infinity) {
+            i=strPoints.length;
+         }
+         else {
+           newArray.push(addedPts);
+         }
+      }
+      gArray = newArray;
+      n = gArray.length;
+      h = (arrayPoints.length / gArray.length);
+      localStorage.setItem("gArray",JSON.stringify(gArray));
+      localStorage.setItem("G", G);
+      localStorage.setItem("n", n);
+      localStorage.setItem("h",h);
+      document.getElementById("Gpoint").innerText = G;
+      document.getElementById("ordern").innerText = n;
+      document.getElementById("cofactorh").innerText = h;
+      document.getElementById("Gpoints").innerText = JSON.stringify(gArray);
+      document.getElementById("nextbutton").disabled = false;
+    }
+   }
+          arrayPoints = [];
+          strPoints = localStorage.getItem("points");
+          arrayPoints = JSON.parse(localStorage.getItem("ptsArray"));
+          a = Number(localStorage.getItem("a"));
+          b = Number(localStorage.getItem("b"));
+          Z = Number(localStorage.getItem("z"));
+          /* scatterChartDraw(arrayPoints); */
+ </script>
+ <div class="page__content-container">
+  <div class="row">
+      <center>
+      <div class="column" id="svgGraph" >
+      </div>
+      </center>
+      <div class="column" >
+        <pre class="code" id="ptsListing">
+
+        </pre>
+      </div>
+  </div>
+  <center>
+  <div class="below-graph-container">
+    <div>
+         Above you can see all the points on your curve generated from the formula. On the left is a scatter plot of all the points, and on the right
+         is a text listing. Alice and Bob must now select their point 'G', the generator point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity point. Select one of the points
+         on the curve and enter it in the box below. Then press <font color=red>Calculate!</font>. The number of points generated in this set will be
+         called the order, and designated with the letter 'n'. We will also
+         calculate the co-factor, designated with the letter 'h'. The cofactor is determined by the number of points on the elliptic curve divided by
+         the order. An ideal cofactor is 1. An ellptic curve and generator point with a cofactor greater than 4 is more susceptible to attack, and is not a good choice.
+         For this lesson you can be less concerned with choosing an ideal cofactor and simply choose one that gives you a number of elements to work with. If you used the suggested values from
+         the other page, point 87,10 makes for a good generator point. If you cannot find a suitable G point to work with, you should select 'Reset' on the left of the page and choose new values to generate
+         your curve.
+    </div>
+
+    <br>
+    <button id="calculate" onclick="calculate()">Calculate!</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next!</button>
+    <div class="inputs">
+       G = <input id="G" onkeyup='document.getElementById("calculate").disabled = false;';>
+    </div>
+    <script>
+       scatterChartDraw(arrayPoints);
+       document.getElementById("ptsListing").innerText = strPoints;
+       document.getElementById("calculate").disabled = true;
+       document.getElementById("nextbutton").disabled = true;
+    </script>
+    </center>
+    <div>
+      <h2 id="g-pts-list-title">The points of the generator G (G, 2G, 3G, 4G, ....) : (<span id="Gpoint"></span>)</h2>
+      <h2 id="n-and-h">Having the order value of <span id="ordern"></span> and the cofactor value of <span id="cofactorh"></span></h2>
+      <h2 id="Gpoints"></span></h2>
+       <script>
+         document.getElementById("g-pts-list-title").style.visibility = "hidden";
+         document.getElementById("n-and-h").style.visibility = "hidden";
+      </script>
+      <br><br>
+    </div>
+   </div>
+ </div>
+  <script src="ecdh-functions.js"></script>
+ </body>
+ </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/header.css">
+  <link rel="stylesheet" type="text/css" href="css/ending-survey.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+
+<div class="form_area">
+<form id="create_form" action="ending-survey.php" method="post">
+<div>
+	<table class="inputs_table">
+		<tbody>
+			<tr class="spaceUnder">
+				<td>Email Address:</td>
+				<td>
+					<input name="email" id="name_input" type="text" >
+				</td>
+			</tr>
+      <tr class="spaceUnder">
+        <td>How familiar with ECC were you, before you started this lesson?</td>
+			  <td>
+				  <label for="one">Much</label>
+				  <input type="radio" id="input_enabled" name="familiar" value="Much">
+					<label for="two">Some</label>
+				  <input type="radio" id="input_disabled" name="familiar" value="Some">
+					<label for="three">None</label>
+				  <input type="radio" id="input_disabled" name="familiar" value="None" />
+			  </td>
+		  </tr>
+      <tr class="spaceUnder">
+				<td>Did the program help your understanding of elliptic curve cryptography?</td>
+			  <td>
+					<label for="one">Much</label>
+				  <input type="radio" id="input_enabled" name="helpful" value="Much">
+					<label for="two">Some</label>
+				  <input type="radio" id="input_disabled" name="helpful" value="Some">
+					<label for="three">None</label>
+				  <input type="radio" id="input_disabled" name="helpful" value="None" />
+			  </td>
+			</tr>
+			<tr class="spaceUnder">
+				<td>Were the steps too detailed or not detailed enough?</td>
+				<td>
+					<label for="one">Too much</label>
+					<input type="radio" id="input_enabled" name="detailed" value="Too much">
+					<label for="two">Just Fine</label>
+					<input type="radio" id="input_disabled" name="detailed" value="Just fine">
+					<label for="three">Not enough</label>
+					<input type="radio" id="input_disabled" name="detailed" value="Not enough" />
+				</td>
+			</tr>
+			<tr class="spaceUnder">
+				<td>Did the steps follow in a logical way?</td>
+			  <td>
+					<label for="one">Yes</label>
+				  <input type="radio" id="input_enabled" name="logic" value="Yes">
+					<label for="two">No</label>
+				  <input type="radio" id="input_disabled" name="logic" value="No" />
+			  </td>
+			</tr>
+			<tr class="spaceUnder">
+          <td>Would you recommend using this site to someone else?</td>
+          <td>
+            <label for="one">Yes</label>
+            <input type="radio" id="input_enabled" name="recommend" value="Yes">
+            <label for="two">No</label>
+            <input type="radio" id="input_disabled" name="recommend" value="No" />
+          </td>
+      </tr>
+		</tbody>
+	</table>
+	Comment:<br>
+	<input type="text" name="comment" size="100"><br><br>
+  <input type="submit" value="Send">
+  <input type="reset" value="Reset">
+  </div></form>
+
+
+</div>
+</body>
+</html>

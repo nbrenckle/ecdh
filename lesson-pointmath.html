@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="css/body.css">
+</head>
+
+<body>
+  <div w3-include-html="header.html"></div>
+  <script>w3.includeHTML();</script>
+  <nav class="Navigator-menu">
+   <ol>
+     <li><a href="#">Intro</a></li>
+     <li><a href="#">a, b, and mod p</a></li>
+     <li><a class="active" href="#">Point Addition</a></li>
+     <li><a href="#">G, Generator</a></li>
+     <li><a href="#">&alpha;, &beta; and A, B</a></li>
+     <li><a href="#">P, shared secret</a></li>
+     <li><a href="#">Encrypt</a></li>
+     <li><a href="#">Decrypt</a></li>
+     <li><a href="#">Wrap Up</a></li>
+   </ol>
+   <br>
+    <form><input type="button" class="reset-button" value="Reset!" data-toggle="tooltip" data-placement="top" title="Delete all data and restart pages!" onClick="resetAll()"></form>
+   <br>
+  </nav>
+  <script>
+    function resetAll() {
+      localStorage.clear();
+      window.location.replace("lesson-formula.html");
+    }
+    // Generate the X Y table of point addition.
+    function calcPtAdditionTable(pts)
+  	{
+  		var table = "";
+  		table += "<table border='1'>";
+  		table += "<tr>";
+  		table += "<td align=center>&plus;</td>";
+  		for(var i = 0; i < pts.length; i++)
+  		{
+  			table += "<td>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  		}
+  		table += "<td>Infinity</td>";
+  		table += "</tr>";
+  		for(var i = 0; i < pts.length; i++)
+  		{
+  			table += "<tr>";
+  			table += "<td>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			for(var j = 0; j < pts.length; j++)
+  			{
+  				var result;
+          // console.log("Adding points ("+pts[i][0]+","+pts[i][1]+") and ("+pts[j][0]+","+pts[j][1]+")");
+  				result = addPts2(pts[i][0], pts[i][1], pts[j][0], pts[j][1]);
+          // console.log("Result = "+result);
+  				if(result != Infinity)	// To avoid printing "(Infinity, Undefined)" and instead neatly: "Infinity"
+  				{
+  					result = "(" + result[0] + ", " + result[1] + ")";
+  				}
+  				table += "<td title='(" + pts[i][0] + ", " + pts[i][1] + ") + (" + pts[j][0] + ", " + pts[j][1] + ")'>" + result + "</td>";
+
+  			}
+  			table += "<td title='(" + pts[i][0] + ", " + pts[i][1] + ") + Infinity'>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "</tr>";
+  		}
+  		table += "<tr><td>Infinity</td>";
+  		for(var j = 0; j < pts.length; j++)
+  		{
+  			table += "<td title='Infinity + (" + pts[j][0] + ", " + pts[j][1] + ")'>(" + pts[j][0] + ", " + pts[j][1] + ")</td>";
+  		}
+  		table += "<td title='Infinity + Infinity'>Infinty</td>";
+  		table += "</tr>";
+  		table += "</table>";
+
+  		document.getElementById("points-table-grid").innerHTML = table;
+  	}
+  </script>
+ </nav>
+ <div class="page__content-container" id="encrypt-lesson">
+   <div>
+       <center><img src="images/addition.jpg" height="200" width="450" title="Wrap Up!" alt="Letter G" />
+       <h2>Point Addition!</h2></center>
+   </div>
+   <br><p></p>
+   <div>
+       <img src="images/pplusqequalsr.png" height="250" width="200" style="float:left;"/>
+       <style="float:right;">
+       <img src="images/doublepequalsr.jpg" height="250" width="200" style="float:right;"/>
+       <style="float:right;">
+       Point addition on an elliptic curve takes advantage of the symmetry of the X axis. To add two points P and Q, draw a straight line through the points until they
+       intersect at a third point. The inverse of this point is the sum of the two points. We can calculate the slope of the line by finding the rise over the run. To add
+       points \((x_1,y_1) and (x_2,y_2)\) we would start with calculating  &lambda; = \({y_2-y_1} \over {x_2-x_1}\). Then to calculate the additive point \((R_x,R_y)\) we would
+       use the two formulas \(R_x=&lambda;^2 - x_1 - x_2\)  and  \(R_y=&lambda;(x_1-R_x)-y_1\). Usng these formulas we can calculate the new point\((R_x, R_y)\). You can
+       see this in the diagram to the left.
+       <br><br>
+       Adding a point to itself is called point doubling. First we calculate the slope of the tangential line through the point \((x_1,y_1)\), and then calculate where
+       that line intersects the curve
+       a second time. The inverse of that point is the solution.  For point doubling, the slope is calculated as &lambda; = \({3x_1^2 + a} \over {2y_1}\). The point resulting
+       point is then caluclated using the forumulas \(R_x = &lambda;^2-2*x_1  and  R_y = -(y_1 + &lambda;(R_x-x_1))\). You can see this in the diagram on the right.
+   </div>
+   <p>
+     On the table below, we can see the results of our points being added to each other, or to themsevles (point doubling). Points that add to inifity are not useful to us
+     when a calculation ends there, and we will use infinity as a stopping point when calculating the sequence of G, 2G, 3G etc. We are also going to include three theorms
+     in our calculations.<br><center>
+     <h2>P + Q = Q + P<br>
+         P + -P = Infinity<br>
+         Infinity + P = P<br></center>
+  <div>
+    <pre class="code" id="points-table-grid">
+    </pre>
+  </div>
+   <br><p></p>
+   <center>
+   On the next page, we will select a point 'G', also called the Generator Point. The generator point is public, known to both Alice and Bob, as well as anyone listening in.
+   <br><p>
+    <form><input type="button" value="Next!" onClick="parent.location='lesson-generator.html'"></form>
+   </center>
+  </div>
+  <script src="ecdh-functions.js"></script>
+  <script>
+  a = Number(localStorage.getItem("a"));
+  b = Number(localStorage.getItem("b"));
+  Z = Number(localStorage.getItem("z"));
+  arrayPoints = JSON.parse(localStorage.getItem("ptsArray"));
+  calcPtAdditionTable(arrayPoints);
+  </script>
+</body>
+</html>
