@@ -48,8 +48,8 @@
    <br><br>
    <div>
        One way Alice and Bob can use encryption is to send other points of the curve in secret. For example, if Alice wants to send Bob the point
-       (<span id="PointMessage"></span>), she can Bobs public key, and he can decrypt it with his private key.
-       She then sends two points to Bob. First is a mask value computed using a random value and the value of G. Second is a Cipher of the point Alice
+       (<span id="PointMessage"></span>), she can use Bobs public key to encrypt it, and Bob can decrypt it with his private key.
+       To do this, Alice sends two points to Bob. First is a mask value computed using a random value and the value of G. Second is a Cipher of the point Alice
        wants to send. Bob can use these two points to find the original message. <br><br>
        First Alice would pick a random value k, such as <span id="valueK"></span>. The point k * G would be (<span id="pointKg"></span>) and we will use that
        as a mask value. The message Alice sends to Bob can be computed
@@ -64,9 +64,9 @@
        (<span id="publicPoint3"></span>) - <span id="bobsPrivate"></span> * (<span id=pointKg3></span>) <br>
        (<span id="publicPoint4"></span>) - (<span id=betaC1s></span>). <br>
        This results in the original message of (<span id="answerPoint"></span>)<br><br>
-       By creating an table of points to letters, Bob and Alice can send text messages in this fashion, assuming they have enough points on their curve to
-       cover all the letters of the alphabet they are working with. One way older crypto systems worked to make the table smaller was use similar letters as substitutes, such as
-       U and V. Another is to shorten all the words into shorter word sequences, making the encyted message shorter and less susceptible to some cryto breaking techniques. Both
+       By creating a table of points to letters, Bob and Alice can send text messages in this fashion, assuming they have enough points on their curve to
+       cover all the letters of the alphabet they are working with. One way older crypto systems worked to make the table smaller was to use similar letters as substitutes, such as
+       U and V. Another is to shorten all the words into shorter word sequences, making the encrypted message shorter and less susceptible to some cryto-breaking techniques. Both
        of these methods were using in <a href="https://en.wikipedia.org/wiki/World_War_II_cryptography" target="_blank">WW2</a>.<br><br>
    </div>
    <div id="lettertable">
