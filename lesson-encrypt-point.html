@@ -41,7 +41,6 @@
   </script>
  </nav>
  <div class="page__content-container" id="encrypt-lesson">
-   <center>
    <div>
        <img src="images/lock2.jpg" height="200" width="250" title="Encrypt" alt="Encrypt" />
    </div>
@@ -53,7 +52,8 @@
        wants to send. Bob can use these two points to find the original message. <br><br>
        First Alice would pick a random value k, such as <span id="valueK"></span>. The point k * G would be (<span id="pointKg"></span>) and we will use that
        as a mask value. The message Alice sends to Bob can be computed
-       as <br>
+       as <br><br>
+       <center>
        CryptedPoint = Message Point + k * B, where B is Bobs public key <br>
        (<span id="PointMessage2"></span>) + <span id="valueK2"></span> * (<span id=betaGBob></span>) <br>
        (<span id="PointMessage3"></span>) + (<span id=kbetaGBob></span>) <br>
@@ -63,17 +63,17 @@
        Message Point = CryptedPoint - &beta; * Mask, where &beta; is Bobs private key. <br>
        (<span id="publicPoint3"></span>) - <span id="bobsPrivate"></span> * (<span id=pointKg3></span>) <br>
        (<span id="publicPoint4"></span>) - (<span id=betaC1s></span>). <br>
-       This results in the original message of (<span id="answerPoint"></span>)<br><br>
+       This results in the original message of (<span id="answerPoint"></span>)<br><br></center>
        By creating a table of points to letters, Bob and Alice can send text messages in this fashion, assuming they have enough points on their curve to
        cover all the letters of the alphabet they are working with. One way older crypto systems worked to make the table smaller was to use similar letters as substitutes, such as
        U and V. Another is to shorten all the words into shorter word sequences, making the encrypted message shorter and less susceptible to some cryto-breaking techniques. Both
        of these methods were using in <a href="https://en.wikipedia.org/wiki/World_War_II_cryptography" target="_blank">WW2</a>.<br><br>
-   </div>
+   </div><center>
    <div id="lettertable">
    </div>
    <br><br>
    <div>
-      <button id="nextbutton" onclick="next()">Next!</button>
+      <button id="nextbutton" onclick="next()">Next</button>
       </center>
 
     </div>

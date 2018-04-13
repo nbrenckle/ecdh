@@ -3,6 +3,8 @@
   float: center;
   padding-top: 130px;
   padding-left: 230px;
+  font-family: Ariel;
+  font-size: 18px;
 }
 .inlineTable {
   display: inline-block;
@@ -68,7 +70,7 @@ pre, listing {
   padding-left: 1em;
 }
 div#equation {
-	font-size: 30px;
+	font-size: 1.3em;
 }
 span.math {
 	font-family: MathJax_Main;

@@ -52,7 +52,6 @@
      </center>
      <p></p>
      <div class="container">
-       <center>
        <div class="input-page">
          <div class="title">
    	        <h1>Finding Points on the Elliptic Curve</h1><p>
@@ -65,8 +64,9 @@
             on the curve to work with.  After calculating the points on your curve, you can scroll down to view the points, press the '<font color=red>Next!</font>' button to advance to <thead>
             next step! If you don't want to pick your own values, use a=1, b=5, and z=127.
          </div>
+         <center>
          <p>
-         <div id="equation">
+         <div id="equation" style="font-size:28px;">
              &nbsp; &nbsp; &nbsp; &nbsp;
              \(y^2 = x^3 + \)
              <span id="a-eqn" class="math">a</span>\(x + \)<span id="b-eqn" class="math">b</span> in \(Z mod \)<span id="z-eqn" class="math">z</span>
@@ -82,7 +82,7 @@
             <br>This is to eliminate <a href="http://mathworld.wolfram.com/SingularPoint.html" target="_blank">singular curves</a>.</p>
          </div>
          <br>
-         <button id="eccbutton" onclick="checkValues()">Calculate!</button>    <button id="nextbutton" onclick="next()">Next!</button>
+         <button id="eccbutton" onclick="checkValues()">Calculate</button>    <button id="nextbutton" onclick="next()">Next</button>
          <script>
          document.getElementById("eccbutton").disabled = true;
          document.getElementById("nextbutton").disabled = true;

@@ -172,12 +172,12 @@
         </pre>
       </div>
   </div>
-  <center>
+
   <div class="below-graph-container">
     <div>
          Above you can see all the points on your curve generated from the formula. On the left is a scatter plot of all the points, and on the right
          is a text listing. Alice and Bob must now select their point 'G', the generator point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity point. Select one of the points
-         on the curve and enter it in the box below. Then press <font color=red>Calculate!</font>. The number of points generated in this set will be
+         on the curve and enter it in the box below. Then press <font color=red>Calculate</font>. The number of points generated in this set will be
          called the order, and designated with the letter 'n'. We will also
          calculate the co-factor, designated with the letter 'h'. The cofactor is determined by the number of points on the elliptic curve divided by
          the order. An ideal cofactor is 1. An ellptic curve and generator point with a cofactor greater than 4 is more susceptible to attack, and is not a good choice.
@@ -187,7 +187,8 @@
     </div>
 
     <br>
-    <button id="calculate" onclick="calculate()">Calculate!</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next!</button>
+    <center>
+    <button id="calculate" onclick="calculate()">Calculate</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next</button>
     <div class="inputs">
        G = <input id="G" onkeyup='document.getElementById("calculate").disabled = false;';>
     </div>

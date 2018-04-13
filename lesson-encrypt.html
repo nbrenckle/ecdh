@@ -42,22 +42,22 @@
   </script>
  </nav>
  <div class="page__content-container" id="encrypt-lesson">
-   <center>
-   <div>
-       <img src="images/locks.jpg" height="200" width="250" title="Encrypt" alt="Encrypt" />
-   </div>
+   <div><center>
+       <img src="images/locks.jpg" height="200" width="450" title="Encrypt" alt="Encrypt" />
+   </center></div>
    <br><br>
    <div>
      Now that we have public and private keys for Alice and Bob, plus a set of points we can assign values to, we can use this to share more than just a single point message.
      We can now use this information all together to share a message. Suppose Alice wanted to send the message 'BOOK' to Bob. Using points along the curve we can assign the
      letters B O and K specific point values.
-     <br><br>
+     <br><br><center>
      <table border=1 style="text-align:center;"><tr><td>B</td><td id="bPointValue"></td></tr>
      <tr><td>O</td><td id="oPointValue"></td></tr>
      <tr><td>K</td><td id="kPointValue"></td></tr></table>
-     <br><br>
+     <br><br></center>
      Alice would encode the message B O O K as four point sets to send to Bob. She would use the same mathamatical formula as used in the previous page. Lets keep the same random k value
      we picked previously. k = <span id="randomKt"></span> and k*G would be (<span id="pointKgt"></span>). This will be a mask value. We also know Bobs public key B is <span id="publicBob"></span>.<br><br>
+     <center>
      <table border=1 style="text-align:center;">
      <tr><td>Letter</td><td>B</td><td>O</td><td>O</td><td>K</td></tr>
      <tr><td>Point</td><td id="bPointValue2"></td><td id="oPointValue2"></td><td id="oPointValue3"></td><td id="kPointValue2"></td></tr>
@@ -81,10 +81,11 @@
    Alice would send the message <span id="messageToBob"></span> to Bob.
    </div>
    <br>
+ </center>
    <div>
      Bob would need to reverse the encryption to return to the original message. He does this by using his private key &beta; which is <span id="privateBob"></span>. After
      we complete the math to get the original point, we can use the Letter to Point table at the top of the page to convert the points back into letters, and see
-     the original message that Alice encrypted.<br>
+     the original message that Alice encrypted.<br><center><br>
      <table border=1 style="text-align:center;">
        <tr><td>Point</td>
          <td><span id="bCryptT2"></span></td>
@@ -107,8 +108,8 @@
      </table>
    </div>
    <br><br>
-   <div>
-    <button id="nextbutton" onclick="next()">Next!</button>
+   <div><center>
+    <button id="nextbutton" onclick="next()">Next</button>
    </div>
    </center>
  </div>

@@ -18,6 +18,7 @@
   width:100px;
 }
 .header__content-text {
+  font-size: 28px;
   float:left;
   text-align: center;
   padding: 15px 20px;

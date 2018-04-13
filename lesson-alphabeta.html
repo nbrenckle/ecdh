@@ -40,7 +40,6 @@
   </script>
  </nav>
  <div class="page__content-container" id="alphabeta-lesson">
-   <center>
    <div>
        <img src="images/alphabeta.png" height="200" width="200" title="Alpha Beta" alt="Alpha Beta Greek Characters" />
    </div>
@@ -54,13 +53,13 @@
       to calculate the values of &alpha; and &beta; from &alpha;G and &beta;G is very difficult. This is also called the Elliptic Curve discrete logarithm problem.
       &alpha; and &beta; are values between 1 and the order, or with our choices, between 1 and <span id="nvalue">000</span>. Enter a value for &alpha;, Alices private key.
       <br><br>
-      Press <font color=red>Calculate for Bob!</font> to choose a random &beta; value for Bob. While Alice and Bob can choose the same random value, choose different ones your
-      first time through. Alice and Bob have their keys selected, press <font color=red>Next!</font>
+      Press <font color=red>Calculate for Bob</font> to choose a random &beta; value for Bob. While Alice and Bob can choose the same random value, choose different ones your
+      first time through. Alice and Bob have their keys selected, press <font color=red>Next</font>
       to move onto the next page.
    </div>
+  <center>
    <p><br>
    <div id="table">
-     <center>
      <table border="5" width="50%" cellpadding="4" cellspacing="4">
          <tr align="center"><td><h2>Alice</h2></td><td></td><td><h2>Bob</h2></td></tr>
          <tr align="center"><td id="GgraphA">G</td><td>G</td><td id="GgraphB">G</td></tr>
@@ -71,10 +70,9 @@
          <tr align="center"><td><span id="alphaG">&alpha;</span></td><td>Key * G</td><td><span id="betaG">&beta;</span></td></tr>
 
      </table>
-     </center>
    </div>
    <br>
-   <button id="BobBeta" onclick="calculate_bob()">Calculate for Bob!</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next!</button>
+   <button id="BobBeta" onclick="calculate_bob()">Calculate for Bob</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next</button>
    </center>
    <script>
        strPoints = localStorage.getItem("points");
