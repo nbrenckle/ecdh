@@ -23,11 +23,6 @@ li a.active {
     background-color: #4CAF50;
     color: white;
 }
-
-li a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-}
 .reset-button {
     background-color: #FF6347;
     color: white;
