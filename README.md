@@ -1,6 +1,9 @@
 # ecdh
 
-Description: A series of web pages to be used as a teaching tool for Elliptic Curve Diffie Hellman. Submitted in 2018 as a project for the completion of a Masters Degree in Computer Science at Southern Connecticut State University. Thesis Advisor: Dr Ata Elahi. Second Reader: Dr Lisa Lancor
+Description: A series of web pages to be used as a teaching tool for Elliptic Curve Diffie Hellman. Submitted in 2018 as a project for the completion of a Masters Degree in Computer Science at Southern Connecticut State University. 
+
+Thesis Advisor: Dr Ata Elahi 
+Second Reader: Dr Lisa Lancor
 
 This set of pages makes use of:
 W2.js by w3schools.com  https://www.w3schools.com/w3js/default.asp
