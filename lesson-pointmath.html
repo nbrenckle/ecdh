@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <title>ECDH: Elliptic Curve Diffie Hellman - Point Addition</title>
   <script src="https://www.w3schools.com/lib/w3.js"></script>
   <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
@@ -86,29 +86,29 @@
  </nav>
  <div class="page__content-container" id="encrypt-lesson">
    <div>
-       <center><img src="images/addition.jpg" height="200" width="450" title="Wrap Up!" alt="Letter G" />
+       <center><img src="images/addition.jpg" height="200" width="450" title="Point Addition" alt="Point Addition" />
        <h2>Point Addition!</h2></center>
    </div>
    <br><p></p>
    <div>
-       <img src="images/pplusqequalsr.png" height="250" width="200" style="float:left;"/>
+       <img src="images/pplusqequalsr.png" height="250" width="200" alt="Elliptic Curve Point Addition" style="float:left;"/>
        <style="float:right;">
-       <img src="images/doublepequalsr.jpg" height="250" width="200" style="float:right;"/>
+       <img src="images/doublepequalsr.jpg" height="250" width="200" alt="Elliptic Curve Point Doubling" style="float:right;"/>
        <style="float:right;">
        Point addition on an elliptic curve takes advantage of the symmetry of the X axis. To add two points P and Q, draw a straight line through the points until they
        intersect at a third point. The inverse of this point is the sum of the two points. We can calculate the slope of the line by finding the rise over the run. To add
        points \((x_1,y_1) and (x_2,y_2)\) we would start with calculating  &lambda; = \({y_2-y_1} \over {x_2-x_1}\). Then to calculate the additive point \((R_x,R_y)\) we would
-       use the two formulas \(R_x=&lambda;^2 - x_1 - x_2\)  and  \(R_y=&lambda;(x_1-R_x)-y_1\). Using these formulas we can calculate the new point\((R_x, R_y)\). You can
-       see this in the diagram to the left.
+       use the two formulas \(R_x=&lambda;^2 - x_1 - x_2\)  and  \(R_y=&lambda;(x_1-R_x)-y_1\). Using these formulas we can calculate the new point \((R_x, R_y)\). This is illustracted
+       in the diagram to the left.
        <br><br>
        Adding a point to itself is called point doubling. First we calculate the slope of the tangential line through the point \((x_1,y_1)\), and then calculate where
        that line intersects the curve
        a second time. The inverse of that point is the solution.  For point doubling, the slope is calculated as &lambda; = \({3x_1^2 + a} \over {2y_1}\). The point resulting
-       point is then caluclated using the forumulas \(R_x = &lambda;^2-2*x_1  and  R_y = -(y_1 + &lambda;(R_x-x_1))\). You can see this in the diagram on the right.
+       point is then caluclated using the forumulas \(R_x = &lambda;^2-2*x_1\)  and  \(R_y = -(y_1 + &lambda;(R_x-x_1))\). This is illustrated in the diagram on the right.
    </div>
    <p>
      On the table below, we can see the results of our points being added to each other, or to themselves (point doubling). On the next page, we will select a point 'G',
-     also called the Generator Point. The generator point is public, known to both Alice and Bob, as well as anyone listening in. Points that add to inifity are not useful to us
+     also called the Generator Point. The Generator Point is public, known to both Alice and Bob, as well as anyone listening in. Points that add to inifity are not useful to us
      when a calculation ends there, and we will use infinity as a stopping point when calculating the sequence of G, 2G, 3G etc. We are also going to include three theorems
      in our calculations.<br><center>
      <h2>P + Q = Q + P<br>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <title>ECDH: Elliptic Curve Diffie Hellman - Encryption Point</title>
   <script src="https://www.w3schools.com/lib/w3.js"></script>
   <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
@@ -47,26 +47,26 @@
    <br><br>
    <div>
        One way Alice and Bob can use encryption is to send other points of the curve in secret. For example, if Alice wants to send Bob the point
-       (<span id="PointMessage"></span>), she can use Bobs public key to encrypt it, and Bob can decrypt it with his private key.
+       (<span id="PointMessage"></span>), she can use Bob's public key to encrypt it, and Bob can decrypt it with his private key.
        To do this, Alice sends two points to Bob. First is a mask value computed using a random value and the value of G. Second is a Cipher of the point Alice
        wants to send. Bob can use these two points to find the original message. <br><br>
        First Alice would pick a random value k, such as <span id="valueK"></span>. The point k * G would be (<span id="pointKg"></span>) and we will use that
        as a mask value. The message Alice sends to Bob can be computed
        as <br><br>
        <center>
-       CryptedPoint = Message Point + k * B, where B is Bobs public key <br>
+       CryptedPoint = MessagePoint + k * B, where B is Bob's public key <br>
        (<span id="PointMessage2"></span>) + <span id="valueK2"></span> * (<span id=betaGBob></span>) <br>
        (<span id="PointMessage3"></span>) + (<span id=kbetaGBob></span>) <br>
         which in this case computes to point (<span id="publicPoint"></span>).<br><br>
        Alice will then send to Bob the message of {(<span id="pointKg2"></span>), (<span id="publicPoint2"></span>)}. Bob will get this
        message and decode it using <br>
-       Message Point = CryptedPoint - &beta; * Mask, where &beta; is Bobs private key. <br>
+       MessagePoint = CryptedPoint - &beta; * Mask, where &beta; is Bobs private key. <br>
        (<span id="publicPoint3"></span>) - <span id="bobsPrivate"></span> * (<span id=pointKg3></span>) <br>
        (<span id="publicPoint4"></span>) - (<span id=betaC1s></span>). <br>
        This results in the original message of (<span id="answerPoint"></span>)<br><br></center>
        By creating a table of points to letters, Bob and Alice can send text messages in this fashion, assuming they have enough points on their curve to
-       cover all the letters of the alphabet they are working with. One way older crypto systems worked to make the table smaller was to use similar letters as substitutes, such as
-       U and V. Another is to shorten all the words into shorter word sequences, making the encrypted message shorter and less susceptible to some cryto-breaking techniques. Both
+       cover all the letters of the alphabet they are working with. One way older cryptographic systems worked to make the table smaller was to use similar letters as substitutes, such as
+       U and V. Another is to shorten all the words into shorter word sequences, making the encrypted message shorter and less susceptible to some crytographic breaking techniques. Both
        of these methods were using in <a href="https://en.wikipedia.org/wiki/World_War_II_cryptography" target="_blank">WW2</a>.<br><br>
    </div><center>
    <div id="lettertable">

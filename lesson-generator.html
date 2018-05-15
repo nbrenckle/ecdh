@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>ECDH: Elliptic Curve Diffie Hellman</title>
+  <title>ECDH: Elliptic Curve Diffie Hellman - G, Generator</title>
   <script src="https://www.w3schools.com/lib/w3.js"></script>
   <script type="text/javascript" src="d3.v2.js"></script>
   <script type="text/x-mathjax-config">
@@ -177,14 +177,15 @@
     <div>
          Above you can see all the points on your curve generated from the formula on the previous page, using your entered values.
          On the left is a scatter plot of all the points, and on the right
-         is a text listing. Alice and Bob must now select their point 'G', the generator point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity point. Select one of the points
+         is a text listing. Alice and Bob must now select their point 'G', the Generator Point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity point. Select one of the points
          on the curve and enter it in the box below. Then press <font color=red>Calculate</font>. The number of points generated in this set will be
          called the order, and designated with the letter 'n'. We will also
-         calculate the co-factor, designated with the letter 'h'. The cofactor is determined by the number of points on the elliptic curve divided by
-         the order. An ideal cofactor is 1. An ellptic curve and generator point with a cofactor greater than 4 is more susceptible to attack, and is not a good choice.
-         For this lesson you can be less concerned with choosing an ideal cofactor and simply choose one that gives you a number of elements to work with. If you used the suggested values from
-         the other page, point 87,10 makes for a good generator point. If you cannot find a suitable G point to work with, you should select 'Reset' on the left of the page and choose new values to generate
-         your curve.
+         calculate the cofactor, designated with the letter 'h'. The cofactor is determined by the number of points on the elliptic curve divided by
+         the order. An ideal cofactor is 1. An elliptic curve and generator point with a cofactor greater than 4 is more susceptible to attack, and is not a good choice.
+         For this lesson you can be less concerned with choosing an ideal cofactor and simply choose one that gives you a number of elements to work with. If you used the
+         suggested values from
+         the other page, point 87,10 makes for a good Generator Point. If you cannot find a suitable G point to work with, you should select 'Reset' on the left of the page and
+         choose new values to generate your curve.
     </div>
 
     <br>
