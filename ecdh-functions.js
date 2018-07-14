@@ -1,9 +1,12 @@
-// Fucntions used across several pages.
+// Functions used across several pages.
+// The following functions are used across multiple pages for ECC calulcations
+
 
 var Z,a,b,Na,Nb,G,Pa,Pb,Ka,Kb,M,C;
 var Xp, Yp, Xq, Yq, Xr, Yr;
 var S;
 
+// Warn user if the values are very large. The code is running in the users browser, locally, and can get very bogged down with large values
 function checkValues() {
 	Z = parseInt(document.getElementById("z").value);
 	if (Z > 9999) {
@@ -15,6 +18,8 @@ function checkValues() {
 	ECC();
 }
 
+// Main ECC function. Calculates points on the curve using a,b and z values.
+// points are stored in localStorage as 'ptsArray'
 function ECC()
 {
 	a = parseInt(document.getElementById("a").value);
@@ -22,6 +27,7 @@ function ECC()
 	Z = parseInt(document.getElementById("z").value);
 	document.getElementById("pt-count").innerText =  0;
 	document.getElementById("pts-list-title").style.visibility = "visible";
+	// Check that values are valid and will create a functional curve
 	if(mod(4*Math.pow(a, 3) + 27*Math.pow(b,2), Z) == 0)
 	{
 		console.log("a and b are not valid!");
@@ -31,6 +37,9 @@ function ECC()
   localStorage.setItem("ptsArray", JSON.stringify(pts));
   }
 
+// Generate the points on the curve, return those points
+// Calculate the possible points, and then verify that they are valid for
+// the curve.
 function generatePtsOnCurve()
 {
 	var possibleY = [];
@@ -67,6 +76,8 @@ function generatePtsOnCurve()
 }
 
 // Find greatest common divisor using Euclidian Algorithm
+// See: https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+// for a more indepth explination
 function gcd(a, b)
 {
 	if(a === b)
@@ -119,6 +130,7 @@ function findInverse(n)
 	return i;
 }
 
+// Calculate the Y value for a given X value
 function calcYECC(x)
 {
 	var y;
