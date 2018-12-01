@@ -47,14 +47,14 @@
   		table += "<td align=center>&plus;</td>";
   		for(var i = 0; i < pts.length; i++)
   		{
-  			table += "<td>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "<td align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   		}
-  		table += "<td>Infinity</td>";
+  		table += "<td align=center>&infin;</td>";
   		table += "</tr>";
   		for(var i = 0; i < pts.length; i++)
   		{
   			table += "<tr>";
-  			table += "<td>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "<td align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   			for(var j = 0; j < pts.length; j++)
   			{
   				var result;
@@ -64,19 +64,21 @@
   				if(result != Infinity)	// To avoid printing "(Infinity, Undefined)" and instead neatly: "Infinity"
   				{
   					result = "(" + result[0] + ", " + result[1] + ")";
-  				}
-  				table += "<td title='(" + pts[i][0] + ", " + pts[i][1] + ") + (" + pts[j][0] + ", " + pts[j][1] + ")'>" + result + "</td>";
+  				} else {
+            result = "&infin;";
+          }
+  				table += "<td align=center title='(" + pts[i][0] + ", " + pts[i][1] + ") + (" + pts[j][0] + ", " + pts[j][1] + ")'>" + result + "</td>";
 
   			}
-  			table += "<td title='(" + pts[i][0] + ", " + pts[i][1] + ") + Infinity'>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "<td align=center title='(" + pts[i][0] + ", " + pts[i][1] + ") + &infin;'>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   			table += "</tr>";
   		}
-  		table += "<tr><td>Infinity</td>";
+  		table += "<tr><td align=center>&infin;</td>";
   		for(var j = 0; j < pts.length; j++)
   		{
-  			table += "<td title='Infinity + (" + pts[j][0] + ", " + pts[j][1] + ")'>(" + pts[j][0] + ", " + pts[j][1] + ")</td>";
+  			table += "<td align=center title='&infin; + (" + pts[j][0] + ", " + pts[j][1] + ")'>(" + pts[j][0] + ", " + pts[j][1] + ")</td>";
   		}
-  		table += "<td title='Infinity + Infinity'>Infinty</td>";
+  		table += "<td align=center title='&infin; + &infin;'>&infin;</td>";
   		table += "</tr>";
   		table += "</table>";
 

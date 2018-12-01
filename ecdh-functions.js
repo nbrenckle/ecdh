@@ -9,8 +9,14 @@ var S;
 // Warn user if the values are very large. The code is running in the users browser, locally, and can get very bogged down with large values
 function checkValues() {
 	Z = parseInt(document.getElementById("z").value);
-	if (Z > 9999) {
-	  var answer = confirm("Values of Z greater than 9999 can cause extremly slow performance or cause your browser to run out of memory. Are you sure you wish to continue?")
+	if ((Z > 9999) || (Z > 127)) {
+	  var answer = confirm("Values of Z greater than 127 can make the pages harder to use, due to the number of  points illustrated. Values of Z greater than 9973 can cause extremly slow performance or cause your browser to run out of memory. Are you sure you wish to continue?")
+		if (!(answer)) {
+			resetAll();
+		}
+	}
+	if ( !(isPrime(Z)) && !(isNaN(Z)) ) {
+		var answer = confirm("Values of Z that are not prime will cause parts of the pages to behave poorly, due to the use of multiplicative inverses. Use of these values are also poor choices in encryption as they make it easier to break. Are you sure you wish to continue?")
 		if (!(answer)) {
 			resetAll();
 		}
