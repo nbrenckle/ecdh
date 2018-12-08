@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<a href="mailto:joe@example.com?subject=feedback">email me</a>
-
 <head>
   <meta charset="utf-8">
   <title>ECDH: Elliptic Curve Diffie Hellman - a, b and mod z</title>
@@ -90,6 +88,7 @@
          {
          	document.getElementById(num + "-eqn").innerText =  document.getElementById(num).value;
          	var myPara = document.getElementById("failtext");
+          // console.log("Update!");
          	myPara.innerHTML = myPara.innerHTML.replace(/4a³ cannot equal 27b²/, '<span style="color:black">4a³ cannot equal 27b²</span>');
          	var myPara = document.getElementById("fail2text");
          	myPara.innerHTML = myPara.innerHTML.replace(/Z must be a prime number/, '<span style="color:black">Z must be a prime number</span>');
@@ -121,6 +120,12 @@
             }
          }
            function next(){
+             if (document.getElementById("pt-count").innerText < 7) {
+               var answer = confirm("Point counts less than 7 will make it hard to complete the rest of the lesson. There will not be enough points to demonstrate ECDH and pages might loop attempting to work with a low point count. Are you sure you wish to continue?")
+               if (!(answer)) {
+                 resetAll();
+               }
+             }
          	   localStorage.setItem("a", document.getElementById("a").value);
          	   localStorage.setItem("b", document.getElementById("b").value);
          	   localStorage.setItem("z", document.getElementById("z").value);

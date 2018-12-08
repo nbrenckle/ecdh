@@ -1,8 +1,8 @@
 # ecdh
 
-Description: A series of web pages to be used as a teaching tool for Elliptic Curve Diffie Hellman. Submitted in 2018 as a project for the completion of a Masters Degree in Computer Science at Southern Connecticut State University. 
+Description: A series of web pages to be used as a teaching tool for Elliptic Curve Diffie Hellman. Submitted in 2018 as a project for the completion of a Masters Degree in Computer Science at Southern Connecticut State University.
 
-Thesis Advisor: Dr Ata Elahi 
+Thesis Advisor: Dr Ata Elahi
 Second Reader: Dr Lisa Lancor
 
 This set of pages makes use of:
@@ -15,3 +15,6 @@ This program makes extensive use of the javascript HTML5 function localStorage. 
 Comments are within the files to explain the functionality. THe primary use of these pages is as a teaching tool, and so feel free to use the code to continue learning.
 
 Thank you to all who helped with advice during the coding of these pages.
+
+v1.8 - Minor spelling mistakes fixed; fixed header HTML error; added dynamic coloring to Point Addition Table and fixed navbar so it stays on top
+       generator page removed manual point entry, replaced with clickable points listing.

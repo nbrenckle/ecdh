@@ -1,14 +1,17 @@
 /* Navigator bar elements */
 .Navigator-menu {
+    left: 0;
     clear: both;
     float: left;
     position: fixed;
     height: 100%;
     list-style-type: none;
     margin: 0;
+    margin-left: 0;
     padding-top: 100px;
     width: 200px;
     background-color: #f1f1f1;
+    z-index: 9;
 }
 
 
@@ -31,5 +34,5 @@ li a.active {
 li b.infomation {
     padding: 15px;
     position: fixed;
-    fload: bottom;
+    float: bottom;
 }

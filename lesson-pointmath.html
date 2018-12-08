@@ -42,19 +42,19 @@
     function calcPtAdditionTable(pts)
   	{
   		var table = "";
-  		table += "<table border='1'>";
+  		table += "<table><tbody>";
   		table += "<tr>";
-  		table += "<td align=center>&plus;</td>";
+  		table += "<td class=\"point-table-header\" align=center>&plus;</td>";
   		for(var i = 0; i < pts.length; i++)
   		{
-  			table += "<td align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "<td class=\"point-table-header\" align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   		}
-  		table += "<td align=center>&infin;</td>";
+  		table += "<td class=\"point-table-header\" align=center>&infin;</td>";
   		table += "</tr>";
   		for(var i = 0; i < pts.length; i++)
   		{
   			table += "<tr>";
-  			table += "<td align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
+  			table += "<td class=\"point-table-header\" align=center>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   			for(var j = 0; j < pts.length; j++)
   			{
   				var result;
@@ -73,14 +73,14 @@
   			table += "<td align=center title='(" + pts[i][0] + ", " + pts[i][1] + ") + &infin;'>(" + pts[i][0] + ", " + pts[i][1] + ")</td>";
   			table += "</tr>";
   		}
-  		table += "<tr><td align=center>&infin;</td>";
+  		table += "<tr><td class=\"point-table-header\" align=center>&infin;</td>";
   		for(var j = 0; j < pts.length; j++)
   		{
-  			table += "<td align=center title='&infin; + (" + pts[j][0] + ", " + pts[j][1] + ")'>(" + pts[j][0] + ", " + pts[j][1] + ")</td>";
+  			table += "<td  align=center title='&infin; + (" + pts[j][0] + ", " + pts[j][1] + ")'>(" + pts[j][0] + ", " + pts[j][1] + ")</td>";
   		}
   		table += "<td align=center title='&infin; + &infin;'>&infin;</td>";
   		table += "</tr>";
-  		table += "</table>";
+  		table += "</tbody></table>";
 
   		document.getElementById("points-table-grid").innerHTML = table;
   	}
@@ -116,8 +116,40 @@
      <h2>P + Q = Q + P<br>
          P + -P = Infinity<br>
          Infinity + P = P<br></center>
-  <div>
-    <pre class="code" id="points-table-grid">
+  <div id="point-table">
+    <style type="text/css">
+    table { border: medium solid black;
+            border-spacing: 0px;
+            font-family: "monospace";
+            font-size: 100%;
+            line-height: 1.5;
+            margin: 0.5em auto 0.5em auto;
+          }
+    table tr td { text-align: center;
+                  border: thin solid black;
+                  padding: 0px;
+                  margin:  0px; }
+    td.point-table-header { text-align: center;
+                 border:thin solid yellow;
+                 background-color:#ffffe6; }
+    #point-table table { overflow: hidden; }
+    #point-table tr:hover { background-color: #ccffff; }
+    #point-table td, th { position: relative; }
+    #point-table td:hover::after,
+    #point-table th:hover::after {
+              content: "";
+              position: absolute;
+              background-color: #ccffff;
+              left: 0;
+              top: -5000px;
+              height: 10000px;
+              width: 100%;
+              z-index: -1;
+              }
+
+  </style>
+    <pre id="points-table-grid">
+
     </pre>
   </div>
    <br><p></p>

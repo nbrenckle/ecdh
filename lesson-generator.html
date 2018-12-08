@@ -102,28 +102,38 @@
               .attr("cx", function (d,i) { return x(d[0]); } )
               .attr("cy", function (d) { return y(d[1]); } )
               .attr("r", radius);
+              // make each dot DO something
+              // attr('onclick', function(p) {
+              //      return 'ellipticApp.showTip(\"' + pointToTipId(p) + '\", \"' + p.toString() + '\")';
+              // }
     }
 
    function next(){
      window.location.replace("lesson-alphabeta.html");
    }
 
-
+   // Click point ID to calculat
+   function clickToCalculate(Xselect, Yselect){
+     document.getElementById("G").innerText = Xselect + "," + Yselect;
+     calculate(Xselect,Yselect);
+   }
    // Caluclate the points 2G, 3G, 4G....infinity
-   function calculate(){
+   function calculate(Xcalc,Ycalc){
      document.getElementById("g-pts-list-title").style.visibility = "visible";
      document.getElementById("n-and-h").style.visibility = "visible";
+     document.getElementById("pointquality").style.visibility = "visible";
       gArray = [];
       var n, h;
-      G = document.getElementById("G").value.replace(/[()]/g, '');
-      GParens = "("+G+")";
+      // G = document.getElementById("G").value.replace(/[()]/g, '');
+      G = [Xcalc, Ycalc];
+      GParens = "("+Xcalc+","+Ycalc+")";
       if (strPoints.indexOf(G) == -1) {
           // console.log("Point G not in list of points.");
          alert('Point selected is not on the list of points. Please try again.')
       } else {
-      var tempArray = G.split(",");
-      var x = Number(tempArray[0]);
-      var y = Number(tempArray[1]);
+      // var tempArray = G.split(",");
+      var x = Xcalc;
+      var y = Ycalc;
       var newArray = [];
       var tempArray2 = [x,y];
       newArray.push(tempArray2);
@@ -149,8 +159,30 @@
       document.getElementById("ordern").innerText = n;
       document.getElementById("cofactorh").innerText = h;
       document.getElementById("Gpoints").innerText = JSON.stringify(gArray);
+      if (h == 1) {
+        document.getElementById("pointq").innerHTML = "<font color=\"green\">excellent</font>";
+        document.getElementById("pointcom").innerText = "A cofactor of 1 means all the points of the curve can be generated from this one point.";
+      } else if (h<2) {
+        document.getElementById("pointq").innerText = "good";
+        document.getElementById("pointcom").innerText = "A cofactor between 1 and 2 means a majority of the points of the curve can be generated from this one point.";
+      } else if (h<4) {
+        document.getElementById("pointq").innerHTML = "<font color=\"hotpink\">poor</font>";
+        document.getElementById("pointcom").innerText = "A cofactor between 2 and 4 is not a very good choice. It is more susceptible to attack and does not cover a large percentage of points in the curve.";
+      } else {
+        document.getElementById("pointq").innerHTML = "<font color=\"red\">bad</font>";
+        document.getElementById("pointcom").innerText = "A cofactor greater than 4 means the point is highly susceptble to attack.";
+      }
       document.getElementById("nextbutton").disabled = false;
     }
+   }
+   function listPoints(){
+     outString = "";
+     for(var i = 0; i < arrayPoints.length; i++)
+     {
+        // outString += "<button onclick=\"clickToCalculate(arrayPoints[i])\">(" + arrayPoints[i] + ")</button> ";
+       outString += "<button onclick=\"clickToCalculate(" + arrayPoints[i] + ")\">(" + arrayPoints[i] + ")</button> ";
+     }
+     return outString;
    }
           arrayPoints = [];
           strPoints = localStorage.getItem("points");
@@ -177,37 +209,41 @@
     <div>
          Above you can see all the points on your curve generated from the formula on the previous page, using your entered values.
          On the left is a scatter plot of all the points, and on the right
-         is a text listing. Alice and Bob must now select their point 'G', the Generator Point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity point. Select one of the points
-         on the curve and enter it in the box below. Then press <font color=red>Calculate</font>. The number of points generated in this set will be
+         is a text listing. Alice and Bob must now select their point 'G', the Generator Point. From this one point we can build a set of points, G, 2G, 3G, 4G, until we reach an infinity
+         point. Select one of the points
+         on the curve from the above right. The number of points generated in this set will be
          called the order, and designated with the letter 'n'. We will also
          calculate the cofactor, designated with the letter 'h'. The cofactor is determined by the number of points on the elliptic curve divided by
          the order. An ideal cofactor is 1. An elliptic curve and generator point with a cofactor greater than 4 is more susceptible to attack, and is not a good choice.
-         For this lesson you can be less concerned with choosing an ideal cofactor and simply choose one that gives you a number of elements to work with. If you used the
+         If you used the
          suggested values from
-         the other page, point 87,10 makes for a good Generator Point. If you cannot find a suitable G point to work with, you should select 'Reset' on the left of the page and
+         the formula page, point 87,10 makes for a good Generator Point. If you cannot find a suitable G point to work with, you should select 'Reset' on the left of the page and
          choose new values to generate your curve.
     </div>
 
     <br>
     <center>
-    <button id="calculate" onclick="calculate()">Calculate</button>&nbsp;&nbsp;<button id="nextbutton" onclick="next()">Next</button>
+    <button id="nextbutton" onclick="next()">Next</button>
     <div class="inputs">
-       G = <input id="G" onkeyup='document.getElementById("calculate").disabled = false;';>
+       G = <span id="G" onkeyup='document.getElementById("nextbutton").disabled = false;';>None</span>
+
     </div>
     <script>
        scatterChartDraw(arrayPoints);
-       document.getElementById("ptsListing").innerText = strPoints;
-       document.getElementById("calculate").disabled = true;
+//       document.getElementById("ptsListing").innerText = "strPoints";
+       document.getElementById("ptsListing").innerHTML = listPoints();
        document.getElementById("nextbutton").disabled = true;
     </script>
     </center>
     <div>
-      <h2 id="g-pts-list-title">The points of the generator G (G, 2G, 3G, 4G, ....) : (<span id="Gpoint"></span>)</h2>
-      <h2 id="n-and-h">Having the order value of <span id="ordern"></span> and the cofactor value of <span id="cofactorh"></span></h2>
+      <h1 id="g-pts-list-title">The points of the generator G (G, 2G, 3G, 4G, ....) : (<span id="Gpoint"></span>)</h1>
+      <h1 id="n-and-h">Having the order value of <span id="ordern"></span> and the cofactor value of <span id="cofactorh">.</span></h1>
+      <h1 id="pointquality">This point is a <span id="pointq"></span> point. <span id="pointcom"></span></h1>
       <h2 id="Gpoints"></span></h2>
        <script>
          document.getElementById("g-pts-list-title").style.visibility = "hidden";
          document.getElementById("n-and-h").style.visibility = "hidden";
+         document.getElementById("pointquality").style.visibility = "hidden";
       </script>
       <br><br>
     </div>
